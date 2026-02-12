@@ -19,7 +19,7 @@ const SectionAbstract: React.FC = () => {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="font-mono text-3xl lg:text-4xl font-bold tracking-tighter uppercase mb-6">
+            <h2 className="font-mono text-4xl lg:text-6xl font-bold tracking-tighter uppercase mb-6">
               ESTÉTICA <br /> NO ES FORMA
             </h2>
             <p className="font-mono text-sm leading-relaxed text-[#1a1a1a]/70">

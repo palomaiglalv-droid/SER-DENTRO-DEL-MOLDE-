@@ -7,7 +7,7 @@ const SectionCleanGirls: React.FC = () => {
     <div className="h-full w-full flex flex-col lg:flex-row bg-[#f5f5f3] overflow-hidden">
       <div className="w-full lg:w-1/2 p-8 lg:p-24 flex flex-col justify-center h-full">
          <h2 className="text-4xl lg:text-7xl font-bold uppercase tracking-tighter mb-2 opacity-10">( 2025 )</h2>
-         <h2 className="text-3xl lg:text-5xl font-bold uppercase tracking-tighter mb-8 lg:mb-12">CLEAN GIRL</h2>
+         <h2 className="text-4xl lg:text-6xl font-bold uppercase tracking-tighter mb-8 lg:mb-12">CLEAN GIRL</h2>
          
          <div className="space-y-6 lg:space-y-8">
             <div className="border-l border-black pl-4 lg:pl-6">

@@ -1,52 +1,91 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
+// Componente robusto para cargar imágenes
+// Intenta varias rutas y extensiones automáticamente si falla la primera
+const ResilientImage = ({ filename, alt, className, id }: { filename: string, alt: string, className: string, id: string }) => {
+  const [attempt, setAttempt] = useState(0);
+  const [isError, setIsError] = useState(false);
+
+  // Lista de intentos en orden de prioridad
+  // 1. Ruta relativa simple (assets/file.jpg) - Lo más probable
+  // 2. Ruta absoluta (/assets/file.jpg) - Para servidores específicos
+  // 3. Variaciones de mayúsculas/minúsculas o extensión .jpeg por si acaso
+  const candidates = [
+    `assets/${filename}.jpg`,
+    `/assets/${filename}.jpg`,
+    `assets/${filename}.JPG`,
+    `assets/${filename}.jpeg`,
+    `./assets/${filename}.jpg`
+  ];
+
+  const currentSrc = candidates[attempt];
+
+  const handleError = () => {
+    if (attempt < candidates.length - 1) {
+      setAttempt(prev => prev + 1);
+    } else {
+      setIsError(true);
+    }
+  };
+
+  if (isError) {
+    return (
+      <div className="w-full h-full flex flex-col items-center justify-center bg-red-50 border border-red-200">
+        <div className="text-center p-1">
+          <p className="text-[8px] font-bold text-red-500 tracking-widest">NO ENCONTRADA</p>
+          <p className="text-[6px] font-mono text-red-400 mt-1 break-all px-2">
+            Verifica que <b>{filename}.jpg</b> esté en la carpeta <b>assets</b>
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <img 
+      src={currentSrc} 
+      alt={alt} 
+      className={className}
+      onError={handleError}
+    />
+  );
+};
+
 const SectionCover: React.FC = () => {
-  // Mapping of user-provided images to the layout
-  // 1. Motion Blur Girl (Clean Girl)
-  // 2. Yellow Shirt Punk (Scene)
-  // 3. Profile Silhouette (Clean Girl)
-  // 4. Glossy Lips (Clean Girl)
-  // 5. Girl with Bow (Scene)
-  // 6. Group on Rooftop (Scene)
-  
+  // Lista de imágenes utilizando solo el nombre del archivo (sin extensión ni ruta)
+  // El componente ResilientImage se encarga de buscarlo
   const collageImages = [
     { 
-      // 1. Motion Blur (Background Layer - Top Left)
-      src: "/assets/cover_motion.jpg", 
-      id: "01_MOTION", 
-      className: "top-[-5%] left-[-5%] w-[45%] h-[60%] z-[1] opacity-60 mix-blend-multiply" 
+      name: "clean_motion_blur", 
+      id: "01_ATMOSPHERE", 
+      className: "top-[-10%] left-[-5%] w-[45%] h-[70%] z-[1] opacity-40 mix-blend-multiply grayscale contrast-125" 
     },
     { 
-      // 2. Scene Punk / Yellow Shirt (Feature - Top Right)
-      src: "/assets/cover_scene_punk.jpg", 
-      id: "02_PUNK", 
-      className: "top-[15%] right-[5%] w-[25%] h-[35%] z-[3] rotate-3 hover:rotate-0 transition-transform duration-700 shadow-xl" 
+      name: "scene_guy_yellow", 
+      id: "02_PUNK_GUY", 
+      className: "top-[8%] right-[2%] w-[28%] h-[auto] aspect-[4/3] z-[3] rotate-6 hover:rotate-0 transition-transform duration-700 shadow-[10px_10px_0px_0px_rgba(0,0,0,0.1)] border-4 border-white" 
     },
     { 
-      // 3. Profile Silhouette (Mid Layer - Left)
-      src: "/assets/cover_profile.jpg", 
+      name: "clean_profile_silhouette", 
       id: "03_PROFILE", 
-      className: "top-[40%] left-[5%] w-[20%] h-[30%] z-[2] opacity-80 grayscale" 
+      className: "top-[32%] left-[12%] w-[16%] h-[auto] aspect-[3/4] z-[2] opacity-90 grayscale brightness-90" 
     },
     { 
-      // 4. Glossy Lips (Detail - Center Floating)
-      src: "/assets/cover_lips.jpg", 
-      id: "04_LIPS", 
-      className: "top-[30%] left-[38%] w-[16%] h-[20%] z-[5] hover:scale-105 transition-transform duration-500 shadow-2xl border border-white/20" 
+      name: "clean_lips_glossy", 
+      id: "04_DETAIL", 
+      className: "top-[45%] left-[42%] w-[22%] h-[auto] aspect-[16/9] z-[10] hover:scale-105 transition-transform duration-500 shadow-2xl border border-white/40" 
     },
     { 
-      // 5. Girl with Bow (Feature - Bottom Left)
-      src: "/assets/cover_scene_bow.jpg", 
-      id: "05_BOW", 
-      className: "bottom-[5%] left-[18%] w-[22%] h-[32%] z-[4] -rotate-2 hover:rotate-0 transition-transform duration-700" 
+      name: "scene_club_girls", 
+      id: "05_CLUB_SCENE", 
+      className: "bottom-[8%] left-[6%] w-[32%] h-[auto] aspect-[4/3] z-[4] -rotate-3 hover:rotate-0 transition-transform duration-700 shadow-xl" 
     },
     { 
-      // 6. Scene Group (Background Layer - Bottom Right)
-      src: "/assets/cover_scene_group.jpg", 
-      id: "06_GROUP", 
-      className: "bottom-[-8%] right-[-8%] w-[48%] h-[48%] z-[1] opacity-70 grayscale mix-blend-multiply" 
+      name: "scene_rooftop_group", 
+      id: "06_ROOFTOP", 
+      className: "bottom-[-10%] right-[-10%] w-[55%] h-[auto] aspect-[3/2] z-[1] opacity-50 grayscale mix-blend-multiply" 
     }
   ];
 
@@ -58,18 +97,13 @@ const SectionCover: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: i * 0.1 }}
-          className={`absolute bg-black/5 ${img.className}`}
+          className={`absolute bg-gray-200 ${img.className} overflow-hidden`}
         >
-          <img 
-            src={img.src} 
+          <ResilientImage 
+            filename={img.name} 
             alt={`REF_${img.id}`} 
+            id={img.id}
             className="w-full h-full object-cover"
-            onError={(e) => {
-              // Fallback for demo purposes if image is missing
-              e.currentTarget.style.display = 'none';
-              e.currentTarget.parentElement!.classList.add('flex', 'items-center', 'justify-center', 'border', 'border-black');
-              e.currentTarget.parentElement!.innerHTML = `<span class="text-[9px] font-bold tracking-widest text-black/50">${img.id}</span>`;
-            }}
           />
           <div className="mt-2 hidden lg:block absolute -bottom-6 left-0">
             <span className="text-[8px] tracking-[0.2em] opacity-40 uppercase bg-[#f5f5f3]/80 px-1 backdrop-blur-sm">
@@ -79,12 +113,12 @@ const SectionCover: React.FC = () => {
         </motion.div>
       ))}
 
-      <div className="z-20 text-center flex flex-col items-center mix-blend-difference text-[#1a1a1a] pointer-events-none">
+      <div className="z-20 text-center flex flex-col items-center mix-blend-difference text-[#1a1a1a] pointer-events-none mt-[-5%]">
         <motion.h1 
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="text-[15vw] leading-none tracking-tight font-bold"
+          className="text-[15vw] leading-none tracking-tight font-bold font-serif"
         >
           SER
         </motion.h1>
@@ -92,7 +126,7 @@ const SectionCover: React.FC = () => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-          className="mt-4 text-[10px] lg:text-[12px] tracking-[0.6em] font-medium uppercase opacity-60"
+          className="mt-2 text-[10px] lg:text-[12px] tracking-[0.6em] font-medium uppercase opacity-60"
         >
           ( DENTRO DEL MOLDE )
         </motion.p>

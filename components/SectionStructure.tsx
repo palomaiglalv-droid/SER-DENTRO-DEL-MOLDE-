@@ -3,135 +3,156 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const SectionStructure: React.FC = () => {
-  const cleanGirlPoints = [
-    "PARADIGMA VISUAL HEGEMÓNICO",
-    "NEUTRALIZACIÓN DE LA IDENTIDAD",
-    "PROMESA NEOLIBERAL (AUTO-OPTIMIZACIÓN)",
-    "CUERPO COMO LIENZO MONETIZABLE"
-  ];
-
-  const sceneKidPoints = [
-    "ÚLTIMA IDENTIDAD JUVENIL DIFERENCIADA",
-    "LENGUAJE DE PERTENENCIA (CÓDIGOS CLAROS)",
-    "EXCESO Y SATURACIÓN COMO DIFERENCIACIÓN",
-    "CONSTRUCCIÓN ACTIVA DEL YO (MYSPACE)"
-  ];
-
   return (
-    <div className="h-full w-full flex flex-col lg:flex-row bg-[#f5f5f3] relative overflow-hidden">
-      
-      {/* LEFT COLUMN: CLEAN GIRL (Dominant / Modernity) */}
-      <div className="w-full lg:w-1/2 h-full border-b lg:border-b-0 lg:border-r border-black/10 flex flex-col justify-center px-8 lg:px-24 relative bg-white">
-        <div className="absolute top-8 lg:top-12 left-8 lg:left-12">
-            <span className="text-[10px] tracking-[0.2em] font-bold opacity-30 uppercase">( 03.A : OBJETO DE ESTUDIO )</span>
+    <div className="h-full w-full flex flex-col items-center px-4 lg:px-12 bg-white overflow-hidden relative">
+      {/* Background Grid Hint */}
+      <div className="absolute inset-0 grid grid-cols-6 pointer-events-none opacity-5">
+        {[...Array(6)].map((_, i) => <div key={i} className="border-r border-black h-full" />)}
+      </div>
+
+      {/* Main Container */}
+      <div className="w-full max-w-[1400px] h-full flex flex-col z-10 relative">
+        
+        {/* Header - Fixed at top */}
+        <div className="pt-20 lg:pt-28 shrink-0 text-center lg:text-left">
+          <h2 className="text-4xl lg:text-6xl font-bold uppercase tracking-tighter leading-none">ESTRUCTURA <br/> NARRATIVA</h2>
         </div>
 
-        <motion.div 
-           initial={{ opacity: 0, x: -20 }}
-           whileInView={{ opacity: 1, x: 0 }}
-           transition={{ duration: 0.8 }}
-        >
-            <h2 className="text-4xl lg:text-6xl font-bold uppercase tracking-tighter leading-[0.85] mb-12">
-               CLEAN GIRL <br />
-               <span className="text-black/20">AESTHETIC</span>
-            </h2>
+        {/* Narrative Flowchart - Perfectly Centered in remaining space */}
+        <div className="flex-1 flex flex-col justify-center w-full">
+          <div className="w-full flex flex-col lg:flex-row items-stretch lg:items-start justify-between gap-4 lg:gap-2">
             
-            <div className="flex flex-col gap-0">
-                {cleanGirlPoints.map((point, index) => (
-                    <div key={index} className="flex flex-col items-start w-full max-w-md">
-                        <motion.div 
-                          initial={{ opacity: 0, x: -10 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.3 + (index * 0.15) }}
-                          className="flex items-center gap-4 bg-[#f5f5f3] px-4 py-3 border border-black/5 w-full relative z-10"
-                        >
-                            <span className="w-1.5 h-1.5 bg-black rounded-full shrink-0"></span>
-                            <p className="text-[10px] lg:text-xs font-mono uppercase tracking-wide font-bold">{point}</p>
-                        </motion.div>
-                        {index < cleanGirlPoints.length - 1 && (
-                            <motion.div 
-                                initial={{ height: 0, opacity: 0 }}
-                                whileInView={{ height: '24px', opacity: 1 }}
-                                transition={{ delay: 0.4 + (index * 0.15), duration: 0.3 }}
-                                className="pl-6 border-l border-dashed border-black/30 ml-[19px]"
-                            >
-                              {/* Connector line space */}
-                            </motion.div>
-                        )}
-                        {index < cleanGirlPoints.length - 1 && (
-                             <motion.div 
-                                initial={{ opacity: 0 }}
-                                whileInView={{ opacity: 1 }}
-                                transition={{ delay: 0.5 + (index * 0.15) }}
-                                className="ml-[15.5px] -mt-1 text-[8px] opacity-50 mb-1"
-                             >▼</motion.div>
-                        )}
-                    </div>
-                ))}
-            </div>
-        </motion.div>
-      </div>
+            {/* 1. PERDIDA DE IDENTIDAD */}
+            <motion.div 
+               initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+               className="flex-1 flex flex-col relative w-full lg:w-auto"
+            >
+               <div className="border border-black p-4 bg-white w-full h-full flex flex-col justify-between min-h-[160px]">
+                  <span className="text-[10px] font-bold opacity-40">( 01 )</span>
+                  <h3 className="text-xs lg:text-sm font-bold uppercase leading-tight mt-auto">PÉRDIDA DE LA <br/>IDENTIDAD</h3>
+               </div>
+               
+               {/* Arrow to 2 */}
+               <div className="hidden lg:flex absolute top-1/2 -right-3 w-6 items-center justify-center -translate-y-1/2 z-20 overflow-visible">
+                  <div className="w-full h-[1px] bg-black"></div>
+                  <div className="absolute -top-4 bg-white px-1 whitespace-nowrap">
+                     <span className="text-[8px] tracking-widest font-bold uppercase">( PORQUE )</span>
+                  </div>
+                  <div className="w-2 h-2 border-t border-r border-black rotate-45 transform translate-x-[-4px]"></div>
+               </div>
+            </motion.div>
 
-      {/* RIGHT COLUMN: SCENE KIDS (Resistance / History) */}
-      <div className="w-full lg:w-1/2 h-full flex flex-col justify-center px-8 lg:px-24 relative bg-[#eaeaea] text-black">
-         <div className="absolute top-8 lg:top-12 right-8 lg:right-12 text-right">
-            <span className="text-[10px] tracking-[0.2em] font-bold opacity-30 uppercase">( 03.B : LÓGICAS OPUESTAS )</span>
+            {/* 2. REPETICIÓN */}
+            <motion.div 
+               initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+               className="flex-1 flex flex-col relative lg:pl-4 w-full lg:w-auto"
+            >
+               <div className="border border-black p-4 bg-white w-full h-full flex flex-col justify-between gap-2 min-h-[160px]">
+                  <div>
+                    <span className="text-[10px] font-bold opacity-40">( 02 )</span>
+                    <h3 className="text-xs lg:text-sm font-bold uppercase mt-1">REPETICIÓN</h3>
+                  </div>
+                  <ul className="text-[9px] lg:text-[10px] leading-relaxed opacity-70 list-disc list-inside uppercase space-y-1 mt-auto">
+                     <li>MINIMALISMO</li>
+                     <li>ALGORITMOS</li>
+                     <li>ETC..</li>
+                  </ul>
+               </div>
+
+               {/* Arrow to 3 */}
+               <div className="hidden lg:flex absolute top-1/2 -right-3 w-6 items-center justify-center -translate-y-1/2 z-20">
+                  <div className="w-full h-[1px] bg-black"></div>
+                  <div className="w-2 h-2 border-t border-r border-black rotate-45 transform translate-x-[-4px]"></div>
+               </div>
+            </motion.div>
+
+            {/* 3. CLEAN GIRL */}
+            <motion.div 
+               initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+               className="flex-[1.4] flex flex-col relative lg:pl-4 w-full lg:w-auto"
+            >
+               <div className="border border-black p-4 bg-white w-full h-full flex flex-col justify-between gap-2 min-h-[160px]">
+                  <div className="flex justify-between items-start">
+                     <span className="text-[10px] font-bold opacity-40">( 03 )</span>
+                     <h3 className="text-xs lg:text-sm font-bold uppercase bg-black text-white px-1">CLEAN GIRL</h3>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-1 mt-auto pt-2">
+                     {['¿ORIGEN?', '¿NOMBRE?', '¿QUÉ ES?', '¿SIGNOS VISUALES?', '¿ASPIRACIÓN?', '¿MORALIDAD?', '¿ECONOMÍA?', '¿POLÍTICA?'].map((q, i) => (
+                        <p key={i} className="text-[8px] lg:text-[9px] uppercase tracking-tight opacity-70 border-b border-black/10 pb-[1px] whitespace-nowrap">{q}</p>
+                     ))}
+                  </div>
+               </div>
+
+                {/* Arrow to 4 */}
+               <div className="hidden lg:flex absolute top-1/2 -right-3 w-6 items-center justify-center -translate-y-1/2 z-20">
+                  <div className="w-full h-[1px] bg-black"></div>
+                  <div className="w-2 h-2 border-t border-r border-black rotate-45 transform translate-x-[-4px]"></div>
+               </div>
+            </motion.div>
+
+            {/* 4. SÍNTESIS */}
+            <motion.div 
+               initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
+               className="flex-1 flex flex-col relative lg:pl-4 w-full lg:w-auto"
+            >
+               <div className="border border-black p-4 bg-white w-full h-full flex flex-col justify-between gap-2 min-h-[160px]">
+                  <span className="text-[10px] font-bold opacity-40">( 04 )</span>
+                  <h3 className="text-xs lg:text-sm font-bold uppercase leading-tight mt-auto">SÍNTESIS DE <br/> PRIMERA <br/> INVESTIGACIÓN</h3>
+               </div>
+
+               {/* Arrow to 5 */}
+               <div className="hidden lg:flex absolute top-1/2 -right-3 w-6 items-center justify-center -translate-y-1/2 z-20 overflow-visible">
+                  <div className="w-full h-[1px] bg-black"></div>
+                  <div className="absolute -top-4 bg-white px-1 whitespace-nowrap">
+                     <span className="text-[8px] tracking-widest font-bold uppercase">( DEMOSTRACIÓN )</span>
+                  </div>
+                  <div className="w-2 h-2 border-t border-r border-black rotate-45 transform translate-x-[-4px]"></div>
+               </div>
+            </motion.div>
+
+            {/* 5. COMPARACIÓN / SCENE KIDS */}
+            <motion.div 
+               initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
+               className="flex-[1.4] flex flex-col relative lg:pl-4 w-full lg:w-auto"
+            >
+               <div className="border border-black p-4 bg-white w-full h-full flex flex-col justify-between gap-2 min-h-[160px]">
+                  <div className="flex justify-between items-start">
+                     <span className="text-[10px] font-bold opacity-40">( 05 )</span>
+                     <h3 className="text-xs lg:text-sm font-bold uppercase bg-black text-white px-1">SCENE KIDS</h3>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-1 mt-auto pt-2">
+                     {['¿ORIGEN?', '¿NOMBRE?', '¿QUÉ ES?', '¿SIGNOS VISUALES?', '¿ASPIRACIÓN?', '¿MORALIDAD?', '¿ECONOMÍA?', '¿POLÍTICA?'].map((q, i) => (
+                        <p key={i} className="text-[8px] lg:text-[9px] uppercase tracking-tight opacity-70 border-b border-black/10 pb-[1px] whitespace-nowrap">{q}</p>
+                     ))}
+                  </div>
+               </div>
+
+               {/* Arrow to 6 */}
+               <div className="hidden lg:flex absolute top-1/2 -right-3 w-6 items-center justify-center -translate-y-1/2 z-20">
+                  <div className="w-full h-[1px] bg-black"></div>
+                  <div className="w-2 h-2 border-t border-r border-black rotate-45 transform translate-x-[-4px]"></div>
+               </div>
+            </motion.div>
+
+            {/* 6. CONCLUSIONES */}
+            <motion.div 
+               initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
+               className="flex-[1.2] flex flex-col relative lg:pl-4 w-full lg:w-auto"
+            >
+               <div className="border border-black p-4 bg-black text-white w-full h-full flex flex-col justify-between gap-2 min-h-[160px]">
+                  <span className="text-[10px] font-bold opacity-40">( 06 )</span>
+                  <div className="mt-auto">
+                    <h3 className="text-xs lg:text-sm font-bold uppercase mb-2">CONCLUSIONES</h3>
+                    <p className="text-[9px] lg:text-[10px] leading-relaxed opacity-80 uppercase">
+                      IMPLICACIONES DE LOS AESTHETICS EN LA FORMACIÓN DE IDENTIDAD CONTEMPORÁNEA
+                    </p>
+                  </div>
+               </div>
+            </motion.div>
+
+          </div>
         </div>
-
-        <motion.div 
-           initial={{ opacity: 0, x: 20 }}
-           whileInView={{ opacity: 1, x: 0 }}
-           transition={{ duration: 0.8, delay: 0.2 }}
-           className="text-left lg:text-right flex flex-col lg:items-end"
-        >
-            <h2 className="text-4xl lg:text-6xl font-bold uppercase tracking-tighter leading-[0.85] mb-12">
-               SCENE KIDS <br />
-               <span className="opacity-30">2000s</span>
-            </h2>
-
-            <div className="flex flex-col gap-0 lg:items-end w-full">
-                 {sceneKidPoints.map((point, index) => (
-                    <div key={index} className="flex flex-col lg:items-end w-full max-w-md">
-                        <motion.div 
-                          initial={{ opacity: 0, x: 10 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.5 + (index * 0.15) }}
-                          className="flex items-center gap-4 bg-white px-4 py-3 border border-black/5 w-full justify-between lg:justify-end relative z-10"
-                        >
-                            <p className="text-[10px] lg:text-xs font-mono uppercase tracking-wide font-bold text-left lg:text-right order-2 lg:order-1">{point}</p>
-                            <span className="w-1.5 h-1.5 bg-black rounded-full shrink-0 order-1 lg:order-2"></span>
-                        </motion.div>
-                        
-                        {index < sceneKidPoints.length - 1 && (
-                            <motion.div 
-                                initial={{ height: 0, opacity: 0 }}
-                                whileInView={{ height: '24px', opacity: 1 }}
-                                transition={{ delay: 0.6 + (index * 0.15), duration: 0.3 }}
-                                className="pr-6 lg:border-r border-l lg:border-l-0 border-dashed border-black/30 ml-[19px] lg:ml-0 mr-[19px]"
-                            >
-                               {/* Connector line space */}
-                            </motion.div>
-                        )}
-                         {index < sceneKidPoints.length - 1 && (
-                             <motion.div 
-                                initial={{ opacity: 0 }}
-                                whileInView={{ opacity: 1 }}
-                                transition={{ delay: 0.7 + (index * 0.15) }}
-                                className="ml-[15.5px] lg:ml-0 lg:mr-[15.5px] -mt-1 text-[8px] opacity-50 mb-1 self-start lg:self-end"
-                             >▼</motion.div>
-                        )}
-                    </div>
-                ))}
-            </div>
-        </motion.div>
       </div>
-
-      {/* CENTER DIVIDER (Desktop only) */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[1px] h-32 bg-black/20 hidden lg:block"></div>
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-black text-white text-[10px] font-bold px-2 py-1 uppercase hidden lg:block tracking-widest">
-        VS
-      </div>
-
     </div>
   );
 };

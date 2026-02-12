@@ -45,7 +45,7 @@ const SectionTheoryHan: React.FC = () => {
           <motion.h2 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="font-mono text-5xl lg:text-7xl font-bold tracking-tighter uppercase leading-none"
+            className="font-mono text-4xl lg:text-6xl font-bold tracking-tighter uppercase leading-none"
           >
             ALGORITMO <br /> & CONTROL
           </motion.h2>

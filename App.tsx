@@ -53,6 +53,16 @@ const App: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // Tap/Click Navigation Logic
+  const handleGlobalTap = (e: React.MouseEvent) => {
+    // Prevent navigation if clicking on interactive elements
+    const target = e.target as HTMLElement;
+    if (target.closest('a') || target.closest('button')) return;
+
+    // Advance to next page
+    setCurrentPage((prev) => (prev + 1) % totalPages);
+  };
+
   const renderPage = () => {
     switch (currentPage) {
       case 0: return <SectionCover />;
@@ -68,10 +78,13 @@ const App: React.FC = () => {
   };
 
   return (
-    <main className="relative h-screen w-screen bg-[#f5f5f3] selection:bg-black selection:text-white font-mono overflow-hidden">
+    <main 
+      className="relative h-screen w-screen bg-[#f5f5f3] selection:bg-black selection:text-white font-mono overflow-hidden cursor-pointer"
+      onClick={handleGlobalTap}
+    >
       
       {/* Global Header */}
-      <div className="fixed top-8 left-8 z-50 text-[#1a1a1a] mix-blend-difference">
+      <div className="fixed top-8 left-8 z-50 text-[#1a1a1a] mix-blend-difference pointer-events-none">
         <p className="text-[10px] tracking-[0.2em] font-medium uppercase">
           ( LOC : LOS ANGELES · {time} )
         </p>
@@ -79,13 +92,13 @@ const App: React.FC = () => {
       
       <Navigation currentPage={currentPage + 1} totalPages={totalPages} />
 
-      <div className="fixed bottom-8 left-8 z-50 text-[#1a1a1a] mix-blend-difference">
+      <div className="fixed bottom-8 left-8 z-50 text-[#1a1a1a] mix-blend-difference pointer-events-none">
         <p className="text-[9px] tracking-[0.2em] font-normal uppercase opacity-40">
-          ( SER_STUDIO // TFG_2026 // [NAV: SPACE / ARROWS] )
+          ( SER_STUDIO // TFG_2026 // [NAV: TAP / SPACE / ARROWS] )
         </p>
       </div>
 
-      <GridOverlay />
+      <GridOverlay currentPage={currentPage} />
 
       <AnimatePresence mode="wait">
         <motion.div

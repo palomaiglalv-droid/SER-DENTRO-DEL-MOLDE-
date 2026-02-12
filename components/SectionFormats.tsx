@@ -24,7 +24,7 @@ const SectionFormats: React.FC = () => {
   return (
     <div className="h-full w-full bg-[#f0f0f0] flex flex-col items-center justify-center px-8 overflow-hidden">
       <div className="max-w-6xl w-full h-full flex flex-col justify-center py-8">
-         <h2 className="text-3xl lg:text-4xl font-bold uppercase tracking-tighter mb-8 lg:mb-12 text-center shrink-0">POSIBLES FORMATOS</h2>
+         <h2 className="text-4xl lg:text-6xl font-bold uppercase tracking-tighter mb-8 lg:mb-12 text-center shrink-0">POSIBLES FORMATOS</h2>
          
          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 h-auto lg:h-[55vh]">
             {formats.map((fmt, i) => (

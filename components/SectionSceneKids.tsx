@@ -25,7 +25,7 @@ const SectionSceneKids: React.FC = () => {
 
       <div className="w-full lg:w-1/2 p-8 lg:p-24 flex flex-col justify-center h-full order-1 lg:order-2">
          <h2 className="text-4xl lg:text-7xl font-bold uppercase tracking-tighter mb-2 opacity-20">( 2000 )</h2>
-         <h2 className="text-3xl lg:text-5xl font-bold uppercase tracking-tighter mb-8 lg:mb-12">SCENE KIDS</h2>
+         <h2 className="text-4xl lg:text-6xl font-bold uppercase tracking-tighter mb-8 lg:mb-12">SCENE KIDS</h2>
          
          <div className="space-y-6 lg:space-y-8">
             <div className="border-l border-white pl-4 lg:pl-6">

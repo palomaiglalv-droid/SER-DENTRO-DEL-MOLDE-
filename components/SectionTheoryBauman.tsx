@@ -19,7 +19,7 @@ const SectionTheoryBauman: React.FC = () => {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="font-mono text-5xl lg:text-7xl font-bold tracking-tighter uppercase leading-[0.85]">
+            <h2 className="font-mono text-4xl lg:text-6xl font-bold tracking-tighter uppercase leading-[0.85]">
               IDENTIDAD <br /> LÍQUIDA
             </h2>
             <p className="mt-8 font-mono text-[11px] tracking-[0.4em] opacity-30 uppercase font-bold">
