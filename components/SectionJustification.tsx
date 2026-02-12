@@ -4,10 +4,10 @@ import { motion } from 'framer-motion';
 
 const SectionJustification: React.FC = () => {
   return (
-    <div className="h-full w-full flex flex-col lg:flex-row bg-[#f5f5f3]">
+    <div className="min-h-[100dvh] lg:h-full w-full flex flex-col lg:flex-row bg-[#f5f5f3]">
       
       {/* LEFT: CLEAN GIRL (Why This Aesthetic?) */}
-      <div className="w-full lg:w-1/2 h-full p-8 lg:p-24 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-black/10 bg-white relative">
+      <div className="w-full lg:w-1/2 min-h-[50vh] lg:h-full p-8 lg:p-24 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-black/10 bg-white relative pt-24 lg:pt-24">
         <div className="absolute top-8 left-8">
             <span className="text-[10px] tracking-[0.2em] font-bold opacity-30 uppercase">( 04.A : CASO DE ESTUDIO )</span>
         </div>
@@ -44,7 +44,7 @@ const SectionJustification: React.FC = () => {
       </div>
 
       {/* RIGHT: SCENE KIDS (Why Compare?) */}
-      <div className="w-full lg:w-1/2 h-full p-8 lg:p-24 flex flex-col justify-center bg-[#222222] text-white relative overflow-hidden">
+      <div className="w-full lg:w-1/2 min-h-[50vh] lg:h-full p-8 lg:p-24 flex flex-col justify-center bg-[#222222] text-white relative overflow-hidden pt-24 lg:pt-24">
          
          <div className="absolute top-8 lg:top-8 right-8 lg:right-8 text-right z-10">
             <span className="text-[10px] tracking-[0.2em] font-bold opacity-30 uppercase">( 04.B : COMPARATIVA )</span>

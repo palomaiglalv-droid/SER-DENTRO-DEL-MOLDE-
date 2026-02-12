@@ -37,7 +37,7 @@ const SectionIndex: React.FC = () => {
   );
 
   return (
-    <div className="h-full w-full flex items-center justify-center bg-[#f5f5f3] overflow-hidden">
+    <div className="min-h-[100dvh] lg:h-full w-full flex items-center justify-center bg-[#f5f5f3] py-24 lg:py-0">
        <div className="w-full max-w-4xl flex flex-col md:flex-row gap-x-16 lg:gap-x-24 px-12">
           
           {/* Column 1 (1-4) */}

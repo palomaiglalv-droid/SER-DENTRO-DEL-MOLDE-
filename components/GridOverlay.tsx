@@ -18,11 +18,6 @@ const GridOverlay: React.FC<GridOverlayProps> = ({ currentPage }) => {
       return 'border-black/5';
     }
     
-    // Page 6: SectionSceneKids (Dark bg)
-    if (currentPage === 6) {
-      return 'border-white/5';
-    }
-
     // Default: Light grid on light background
     return 'border-black/5';
   };
@@ -35,10 +30,6 @@ const GridOverlay: React.FC<GridOverlayProps> = ({ currentPage }) => {
         background: 'linear-gradient(90deg, rgba(0,0,0,0.05) 50%, rgba(255,255,255,0.03) 50%)'
       };
     }
-    // Page 6: Dark background
-    if (currentPage === 6) {
-      return { backgroundColor: 'rgba(255,255,255,0.05)' };
-    }
     // Default
     return { backgroundColor: 'rgba(0,0,0,0.05)' };
   };
@@ -50,7 +41,7 @@ const GridOverlay: React.FC<GridOverlayProps> = ({ currentPage }) => {
         {Array.from({ length: 11 }).map((_, i) => (
           <div 
             key={i} 
-            className={`border-r h-full first:border-l transition-colors duration-500 ${getVerticalLineColor(i)} ${i === 0 && currentPage === 6 ? 'border-l-white/5' : i === 0 ? 'border-l-black/5' : ''}`} 
+            className={`border-r h-full first:border-l transition-colors duration-500 ${getVerticalLineColor(i)} ${i === 0 ? 'border-l-black/5' : ''}`} 
           />
         ))}
       </div>

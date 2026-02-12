@@ -4,23 +4,23 @@ import { motion } from 'framer-motion';
 
 const SectionStructure: React.FC = () => {
   return (
-    <div className="h-full w-full flex flex-col items-center px-4 lg:px-12 bg-white overflow-hidden relative">
+    <div className="min-h-[100dvh] lg:h-full w-full flex flex-col items-center px-4 lg:px-12 bg-white relative overflow-y-auto lg:overflow-hidden py-24 lg:py-0">
       {/* Background Grid Hint */}
       <div className="absolute inset-0 grid grid-cols-6 pointer-events-none opacity-5">
         {[...Array(6)].map((_, i) => <div key={i} className="border-r border-black h-full" />)}
       </div>
 
       {/* Main Container */}
-      <div className="w-full max-w-[1400px] h-full flex flex-col z-10 relative">
+      <div className="w-full max-w-[1400px] lg:h-full flex flex-col z-10 relative">
         
         {/* Header - Fixed at top */}
-        <div className="pt-20 lg:pt-28 shrink-0 text-center lg:text-left">
+        <div className="lg:pt-28 shrink-0 text-center lg:text-left mb-8 lg:mb-0">
           <h2 className="text-4xl lg:text-6xl font-bold uppercase tracking-tighter leading-none">ESTRUCTURA <br/> NARRATIVA</h2>
         </div>
 
         {/* Narrative Flowchart - Perfectly Centered in remaining space */}
         <div className="flex-1 flex flex-col justify-center w-full">
-          <div className="w-full flex flex-col lg:flex-row items-stretch lg:items-start justify-between gap-4 lg:gap-2">
+          <div className="w-full flex flex-col lg:flex-row items-stretch lg:items-start justify-between gap-4 lg:gap-2 pb-12 lg:pb-0">
             
             {/* 1. PERDIDA DE IDENTIDAD */}
             <motion.div 

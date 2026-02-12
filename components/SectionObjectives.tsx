@@ -13,10 +13,10 @@ const SectionObjectives: React.FC = () => {
   ];
 
   return (
-    <div className="h-full w-full bg-white flex flex-col lg:flex-row px-8 lg:px-12 py-20 lg:py-0 overflow-hidden relative">
+    <div className="min-h-[100dvh] lg:h-full w-full bg-white flex flex-col lg:flex-row px-8 lg:px-12 py-24 lg:py-0 overflow-y-auto lg:overflow-hidden relative">
       
       {/* LEFT COLUMN: Objetivo General (Now 2.1) */}
-      <div className="w-full lg:w-5/12 h-full flex flex-col justify-center lg:pr-16 relative z-10">
+      <div className="w-full lg:w-5/12 lg:h-full flex flex-col justify-center lg:pr-16 relative z-10 shrink-0">
          
          {/* 2.1 OBJETIVO GENERAL */}
          <motion.div 
@@ -38,7 +38,7 @@ const SectionObjectives: React.FC = () => {
       </div>
 
       {/* RIGHT COLUMN: Specific Objectives List (Now 2.2) */}
-      <div className="w-full lg:w-7/12 h-full flex flex-col justify-center relative z-10 lg:pl-16 lg:border-l border-black/5 mt-8 lg:mt-0">
+      <div className="w-full lg:w-7/12 lg:h-full flex flex-col justify-center relative z-10 lg:pl-16 lg:border-l border-black/5 mt-12 lg:mt-0">
         
         <div className="mb-6 lg:mb-10 flex items-end justify-between border-b border-black pb-4">
             <div>
@@ -50,7 +50,7 @@ const SectionObjectives: React.FC = () => {
             </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-3 overflow-y-auto lg:overflow-visible max-h-[40vh] lg:max-h-none pr-2 custom-scrollbar">
+        <div className="grid grid-cols-1 gap-3 overflow-visible lg:pr-2">
             {specificObjectives.map((obj, i) => (
                 <motion.div
                     key={i}

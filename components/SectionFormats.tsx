@@ -22,7 +22,7 @@ const SectionFormats: React.FC = () => {
   ];
 
   return (
-    <div className="h-full w-full bg-[#f0f0f0] flex flex-col items-center justify-center px-8 overflow-hidden">
+    <div className="min-h-[100dvh] lg:h-full w-full bg-[#f0f0f0] flex flex-col items-center justify-center px-8 overflow-y-auto lg:overflow-hidden py-24 lg:py-0">
       <div className="max-w-6xl w-full h-full flex flex-col justify-center py-8">
          <h2 className="text-4xl lg:text-6xl font-bold uppercase tracking-tighter mb-8 lg:mb-12 text-center shrink-0">POSIBLES FORMATOS</h2>
          
@@ -33,7 +33,7 @@ const SectionFormats: React.FC = () => {
                  initial={{ opacity: 0, y: 20 }}
                  whileInView={{ opacity: 1, y: 0 }}
                  transition={{ delay: i * 0.2 }}
-                 className="bg-white p-6 lg:p-8 border border-black/5 hover:border-black transition-colors flex flex-col justify-between h-full"
+                 className="bg-white p-6 lg:p-8 border border-black/5 hover:border-black transition-colors flex flex-col justify-between h-full min-h-[300px] lg:min-h-0"
                >
                   <div>
                     <span className="text-3xl lg:text-[40px] font-bold opacity-10 leading-none">( {fmt.id} )</span>

@@ -2,65 +2,82 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
-// Componente simple: Intenta cargar la ruta exacta, si falla usa fallback
-const ResilientImage = ({ src, fallbackSrc, alt, className }: { src: string, fallbackSrc: string, alt: string, className: string }) => {
-  const [imgSrc, setImgSrc] = useState(src);
+// Componente: Intenta cargar la ruta local. Si falla, muestra un placeholder técnico con una X.
+const ResilientImage = ({ src, id, alt, className }: { src: string, id: string, alt: string, className: string }) => {
+  const [hasError, setHasError] = useState(false);
 
-  const handleError = () => {
-    if (imgSrc !== fallbackSrc) {
-      console.warn(`Local asset not found: ${src}. Switching to fallback.`);
-      setImgSrc(fallbackSrc);
-    }
-  };
+  if (hasError) {
+    return (
+      <div className={`relative bg-black border border-white flex items-center justify-center overflow-hidden ${className}`}>
+        {/* Cruz (X) SVG que se adapta al contenedor - Color Blanco */}
+        <svg className="absolute inset-0 w-full h-full text-white pointer-events-none" preserveAspectRatio="none">
+           <line x1="0" y1="0" x2="100%" y2="100%" stroke="currentColor" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+           <line x1="100%" y1="0" x2="0" y2="100%" stroke="currentColor" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+        </svg>
+        
+        {/* Mensaje de Error - Texto Blanco sobre fondo Negro */}
+        <div className="z-10 flex flex-col items-center justify-center text-center p-2">
+            <span className="bg-black px-2 py-1 border border-white text-[8px] lg:text-[10px] font-mono tracking-widest text-white font-bold uppercase whitespace-nowrap">
+                IDENTITY_ERROR
+            </span>
+            <span className="mt-1 text-[8px] font-mono tracking-widest text-white uppercase">
+                {id}_NOT_FOUND
+            </span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <img 
-      src={imgSrc} 
+      src={src} 
       alt={alt} 
       className={className}
-      onError={handleError}
+      onError={() => setHasError(true)}
     />
   );
 };
 
 const SectionCover: React.FC = () => {
-  // Configuración exacta con las rutas solicitadas
+  // Configuración de rutas locales. 
+  // NOTA: Se han roto intencionalmente los links para mostrar el diseño "Error".
+  // Se han ajustado las posiciones para dejar el centro libre para el título.
   const collageImages = [
     { 
       id: "01_ATMOSPHERE", 
-      src: "/assets/clean_motion_blur.jpg",
-      fallback: "https://images.unsplash.com/photo-1496345962527-29757c3a3d94?q=80&w=2070&auto=format&fit=crop",
-      className: "top-[-10%] left-[-5%] w-[45%] h-[70%] z-[1] opacity-40 mix-blend-multiply grayscale contrast-125" 
+      src: "MISSING_FILE_01",
+      // Esquina Superior Izquierda
+      className: "top-0 left-0 w-[25vw] h-[45vh] z-[1] opacity-40 mix-blend-multiply grayscale contrast-125" 
     },
     { 
       id: "02_PUNK_GUY", 
-      src: "/assets/scene_guy_yellow.jpg",
-      fallback: "https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?q=80&w=2064&auto=format&fit=crop",
-      className: "top-[8%] right-[2%] w-[28%] h-[auto] aspect-[4/3] z-[3] rotate-6 hover:rotate-0 transition-transform duration-700 shadow-[10px_10px_0px_0px_rgba(0,0,0,0.1)] border-4 border-white" 
+      src: "MISSING_FILE_02",
+      // Esquina Superior Derecha - Sombra eliminada
+      className: "top-[5%] right-[5%] w-[18vw] h-[auto] aspect-[4/3] z-[3] rotate-6 hover:rotate-0 transition-transform duration-700 border-4 border-white" 
     },
     { 
       id: "03_PROFILE", 
-      src: "/assets/clean_profile_silhouette.jpg",
-      fallback: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop",
-      className: "top-[32%] left-[12%] w-[16%] h-[auto] aspect-[3/4] z-[2] opacity-90 grayscale brightness-90" 
+      src: "MISSING_FILE_03",
+      // Lateral Izquierdo (Alejado del centro)
+      className: "top-[50%] left-[2%] w-[12vw] h-[auto] aspect-[3/4] z-[2] opacity-90 grayscale brightness-90 -translate-y-1/2" 
     },
     { 
       id: "04_DETAIL", 
-      src: "/assets/clean_lips_glossy.jpg",
-      fallback: "https://images.unsplash.com/photo-1588513519863-75b285145dc2?q=80&w=2070&auto=format&fit=crop",
-      className: "top-[45%] left-[42%] w-[22%] h-[auto] aspect-[16/9] z-[10] hover:scale-105 transition-transform duration-500 shadow-2xl border border-white/40" 
+      src: "MISSING_FILE_04",
+      // Lateral Derecho (Alejado del centro)
+      className: "top-[55%] right-[3%] w-[15vw] h-[auto] aspect-[16/9] z-[10] hover:scale-105 transition-transform duration-500 shadow-2xl border border-white/40 -translate-y-1/2" 
     },
     { 
       id: "05_CLUB_SCENE", 
-      src: "/assets/scene_club_girls.jpg",
-      fallback: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=2070&auto=format&fit=crop",
-      className: "bottom-[8%] left-[6%] w-[32%] h-[auto] aspect-[4/3] z-[4] -rotate-3 hover:rotate-0 transition-transform duration-700 shadow-xl" 
+      src: "MISSING_FILE_05",
+      // Esquina Inferior Izquierda
+      className: "bottom-[5%] left-[5%] w-[20vw] h-[auto] aspect-[4/3] z-[4] -rotate-3 hover:rotate-0 transition-transform duration-700 shadow-xl" 
     },
     { 
       id: "06_ROOFTOP", 
-      src: "/assets/scene_rooftop_group.jpg",
-      fallback: "https://images.unsplash.com/photo-1485230405346-71acb9518d9c?q=80&w=2094&auto=format&fit=crop",
-      className: "bottom-[-10%] right-[-10%] w-[55%] h-[auto] aspect-[3/2] z-[1] opacity-50 grayscale mix-blend-multiply" 
+      src: "MISSING_FILE_06",
+      // Esquina Inferior Derecha
+      className: "bottom-0 right-0 w-[35vw] h-[auto] aspect-[3/2] z-[1] opacity-50 grayscale mix-blend-multiply" 
     }
   ];
 
@@ -72,15 +89,16 @@ const SectionCover: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: i * 0.1 }}
-          className={`absolute bg-gray-200 ${img.className} overflow-hidden`}
+          className={`absolute ${img.className} overflow-hidden`}
         >
           <ResilientImage 
             src={img.src} 
-            fallbackSrc={img.fallback}
+            id={img.id}
             alt={`REF_${img.id}`} 
             className="w-full h-full object-cover"
           />
-          <div className="mt-2 hidden lg:block absolute -bottom-6 left-0">
+          {/* Label flotante solo si no es error (opcional, pero estético dejarlo fuera del componente de imagen) */}
+          <div className="mt-2 hidden lg:block absolute -bottom-6 left-0 pointer-events-none">
             <span className="text-[8px] tracking-[0.2em] opacity-40 uppercase bg-[#f5f5f3]/80 px-1 backdrop-blur-sm">
               ( REF : {img.id} )
             </span>
@@ -88,12 +106,12 @@ const SectionCover: React.FC = () => {
         </motion.div>
       ))}
 
-      <div className="z-20 text-center flex flex-col items-center mix-blend-difference text-[#1a1a1a] pointer-events-none mt-[-5%]">
+      <div className="z-20 text-center flex flex-col items-center text-black pointer-events-none mt-[-2%]">
         <motion.h1 
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="text-[15vw] leading-none tracking-tight font-bold font-serif"
+          className="text-[18vw] leading-none tracking-tight font-bold font-mono"
         >
           SER
         </motion.h1>
@@ -101,7 +119,7 @@ const SectionCover: React.FC = () => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-          className="mt-2 text-[10px] lg:text-[12px] tracking-[0.6em] font-medium uppercase opacity-60"
+          className="mt-4 text-[10px] lg:text-[14px] tracking-[0.8em] font-medium uppercase opacity-60 font-mono"
         >
           ( DENTRO DEL MOLDE )
         </motion.p>

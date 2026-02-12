@@ -17,21 +17,6 @@ import SectionFormats from './components/SectionFormats';
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const totalPages = 8;
-  const [time, setTime] = useState('');
-
-  // Time logic
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setTime(new Intl.DateTimeFormat('en-US', { 
-        timeZone: 'America/Los_Angeles', 
-        hour: '2-digit', minute: '2-digit', hour12: true 
-      }).format(now));
-    };
-    updateTime();
-    const interval = setInterval(updateTime, 60000);
-    return () => clearInterval(interval);
-  }, []);
 
   // Keyboard Navigation Logic (Space + Arrows)
   useEffect(() => {
@@ -59,7 +44,10 @@ const App: React.FC = () => {
     const target = e.target as HTMLElement;
     if (target.closest('a') || target.closest('button')) return;
 
-    // Advance to next page
+    // Advance to next page if not selecting text
+    const selection = window.getSelection();
+    if (selection && selection.toString().length > 0) return;
+
     setCurrentPage((prev) => (prev + 1) % totalPages);
   };
 
@@ -79,14 +67,14 @@ const App: React.FC = () => {
 
   return (
     <main 
-      className="relative h-screen w-screen bg-[#f5f5f3] selection:bg-black selection:text-white font-mono overflow-hidden cursor-pointer"
+      className="relative h-[100dvh] w-screen bg-[#f5f5f3] selection:bg-black selection:text-white font-mono overflow-y-auto lg:overflow-hidden cursor-pointer scroll-smooth"
       onClick={handleGlobalTap}
     >
       
       {/* Global Header */}
       <div className="fixed top-8 left-8 z-50 text-[#1a1a1a] mix-blend-difference pointer-events-none">
         <p className="text-[10px] tracking-[0.2em] font-medium uppercase">
-          ( LOC : LOS ANGELES · {time} )
+          SER ( dentro del molde. )
         </p>
       </div>
       
@@ -107,7 +95,7 @@ const App: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="h-full w-full"
+          className="min-h-full w-full"
         >
           {renderPage()}
         </motion.div>
