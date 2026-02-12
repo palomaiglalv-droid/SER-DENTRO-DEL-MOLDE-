@@ -2,43 +2,62 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
-// Componente robusto para cargar imágenes
-// Intenta varias rutas y extensiones automáticamente si falla la primera
-const ResilientImage = ({ filename, alt, className, id }: { filename: string, alt: string, className: string, id: string }) => {
+// Componente robusto: Prioriza URL remota (GitHub), luego Local, luego Fallback
+const ResilientImage = ({ filename, remoteUrl, fallbackSrc, alt, className, id }: { filename: string, remoteUrl?: string, fallbackSrc: string, alt: string, className: string, id: string }) => {
   const [attempt, setAttempt] = useState(0);
+  const [useFallback, setUseFallback] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  // Lista de intentos en orden de prioridad
-  // 1. Ruta relativa simple (assets/file.jpg) - Lo más probable
-  // 2. Ruta absoluta (/assets/file.jpg) - Para servidores específicos
-  // 3. Variaciones de mayúsculas/minúsculas o extensión .jpeg por si acaso
-  const candidates = [
+  // 1. Si el usuario puso un link de GitHub (remoteUrl), intentamos cargar ese primero.
+  // 2. Si no, o si falla, intentamos rutas locales.
+  const localCandidates = [
     `assets/${filename}.jpg`,
     `/assets/${filename}.jpg`,
-    `assets/${filename}.JPG`,
-    `assets/${filename}.jpeg`,
-    `./assets/${filename}.jpg`
+    `assets/${filename}.JPG`
   ];
 
-  const currentSrc = candidates[attempt];
+  // Lógica de fuente de imagen
+  let currentSrc;
+
+  if (remoteUrl && attempt === -1) {
+     // Intento especial: Usar URL remota directa
+     currentSrc = remoteUrl;
+  } else if (useFallback) {
+     currentSrc = fallbackSrc;
+  } else {
+     // Si remoteUrl falló (o no existe), usamos locales
+     // Si remoteUrl existía, attempt empezará en 0 tras el fallo
+     currentSrc = localCandidates[attempt];
+  }
+
+  // Inicializar estado: si hay remoteUrl, el "intento" es -1 (prioridad máxima)
+  React.useEffect(() => {
+    if (remoteUrl) setAttempt(-1);
+  }, [remoteUrl]);
 
   const handleError = () => {
-    if (attempt < candidates.length - 1) {
+    if (attempt === -1) {
+      // Falló el link de GitHub, pasamos a intentar locales
+      console.log(`Remote URL failed for ${id}, trying locals.`);
+      setAttempt(0);
+    } else if (attempt < localCandidates.length - 1) {
+      // Probamos siguiente ruta local
       setAttempt(prev => prev + 1);
     } else {
-      setIsError(true);
+      // Fallaron locales, vamos al fallback de Unsplash
+      if (!useFallback) {
+        console.log(`All locals failed for ${id}, switching to fallback.`);
+        setUseFallback(true);
+      } else {
+        setIsError(true);
+      }
     }
   };
 
   if (isError) {
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center bg-red-50 border border-red-200">
-        <div className="text-center p-1">
-          <p className="text-[8px] font-bold text-red-500 tracking-widest">NO ENCONTRADA</p>
-          <p className="text-[6px] font-mono text-red-400 mt-1 break-all px-2">
-            Verifica que <b>{filename}.jpg</b> esté en la carpeta <b>assets</b>
-          </p>
-        </div>
+      <div className="w-full h-full flex flex-col items-center justify-center bg-gray-200 border border-gray-300">
+        <span className="text-[8px] font-bold text-gray-400">IMG ERROR</span>
       </div>
     );
   }
@@ -54,37 +73,60 @@ const ResilientImage = ({ filename, alt, className, id }: { filename: string, al
 };
 
 const SectionCover: React.FC = () => {
-  // Lista de imágenes utilizando solo el nombre del archivo (sin extensión ni ruta)
-  // El componente ResilientImage se encarga de buscarlo
+  // =====================================================================
+  // INSTRUCCIONES PARA GITHUB:
+  // 1. Sube tus fotos a un repositorio público de GitHub.
+  // 2. Abre la imagen en GitHub, click derecho en botón "Raw" -> Copiar enlace.
+  // 3. Pega ese enlace en el campo 'remoteUrl' de cada imagen abajo.
+  // =====================================================================
+  
   const collageImages = [
     { 
-      name: "clean_motion_blur", 
       id: "01_ATMOSPHERE", 
+      name: "clean_motion_blur", 
+      // PEGA TU LINK DE GITHUB AQUI ABAJO (dentro de las comillas):
+      remoteUrl: "", 
+      fallback: "https://images.unsplash.com/photo-1496345962527-29757c3a3d94?q=80&w=2070&auto=format&fit=crop",
       className: "top-[-10%] left-[-5%] w-[45%] h-[70%] z-[1] opacity-40 mix-blend-multiply grayscale contrast-125" 
     },
     { 
-      name: "scene_guy_yellow", 
       id: "02_PUNK_GUY", 
+      name: "scene_guy_yellow", 
+      // PEGA TU LINK DE GITHUB AQUI ABAJO:
+      remoteUrl: "", 
+      fallback: "https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?q=80&w=2064&auto=format&fit=crop",
       className: "top-[8%] right-[2%] w-[28%] h-[auto] aspect-[4/3] z-[3] rotate-6 hover:rotate-0 transition-transform duration-700 shadow-[10px_10px_0px_0px_rgba(0,0,0,0.1)] border-4 border-white" 
     },
     { 
-      name: "clean_profile_silhouette", 
       id: "03_PROFILE", 
+      name: "clean_profile_silhouette", 
+      // PEGA TU LINK DE GITHUB AQUI ABAJO:
+      remoteUrl: "", 
+      fallback: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop",
       className: "top-[32%] left-[12%] w-[16%] h-[auto] aspect-[3/4] z-[2] opacity-90 grayscale brightness-90" 
     },
     { 
-      name: "clean_lips_glossy", 
       id: "04_DETAIL", 
+      name: "clean_lips_glossy", 
+      // PEGA TU LINK DE GITHUB AQUI ABAJO:
+      remoteUrl: "", 
+      fallback: "https://images.unsplash.com/photo-1588513519863-75b285145dc2?q=80&w=2070&auto=format&fit=crop",
       className: "top-[45%] left-[42%] w-[22%] h-[auto] aspect-[16/9] z-[10] hover:scale-105 transition-transform duration-500 shadow-2xl border border-white/40" 
     },
     { 
-      name: "scene_club_girls", 
       id: "05_CLUB_SCENE", 
+      name: "scene_club_girls", 
+      // PEGA TU LINK DE GITHUB AQUI ABAJO:
+      remoteUrl: "", 
+      fallback: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=2070&auto=format&fit=crop",
       className: "bottom-[8%] left-[6%] w-[32%] h-[auto] aspect-[4/3] z-[4] -rotate-3 hover:rotate-0 transition-transform duration-700 shadow-xl" 
     },
     { 
-      name: "scene_rooftop_group", 
       id: "06_ROOFTOP", 
+      name: "scene_rooftop_group", 
+      // PEGA TU LINK DE GITHUB AQUI ABAJO:
+      remoteUrl: "", 
+      fallback: "https://images.unsplash.com/photo-1485230405346-71acb9518d9c?q=80&w=2094&auto=format&fit=crop",
       className: "bottom-[-10%] right-[-10%] w-[55%] h-[auto] aspect-[3/2] z-[1] opacity-50 grayscale mix-blend-multiply" 
     }
   ];
@@ -101,6 +143,8 @@ const SectionCover: React.FC = () => {
         >
           <ResilientImage 
             filename={img.name} 
+            remoteUrl={img.remoteUrl}
+            fallbackSrc={img.fallback}
             alt={`REF_${img.id}`} 
             id={img.id}
             className="w-full h-full object-cover"
